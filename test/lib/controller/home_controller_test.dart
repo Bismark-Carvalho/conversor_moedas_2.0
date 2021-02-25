@@ -13,9 +13,6 @@ void main() {
   test('deve converter de real para dorlar', () {
     toTextEditingController.text = '2.0';
     homeController.convert();
-    expect(fromTextEditingController.text, '2');
-    fromTextEditingController.text = '2.0';
-
-
+    expect(fromTextEditingController.text, '0.36');
   });
 }
