@@ -1,12 +1,17 @@
+import 'package:conversor_moedas_yt/src/models/currency_model.dart';
 import 'package:flutter/material.dart';
 
-class CurrencyField extends StatefulWidget {
-  @override
-  _CurrencyFieldState createState() => _CurrencyFieldState();
-}
+class CurrencyFieldComponent extends StatelessWidget {
+  final List<CurrencyModel> currencies;
 
-class _CurrencyFieldState extends State<CurrencyField> {
-  String value = "Euro";
+  final void Function(CurrencyModel) onChanged;
+
+  final TextEditingController controller;
+  final CurrencyModel selectedItem;
+
+  CurrencyFieldComponent({Key key, this.currencies, this.onChanged,
+      this.controller, this.selectedItem})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,28 +27,22 @@ class _CurrencyFieldState extends State<CurrencyField> {
               padding: const EdgeInsets.all(8.0),
               child: SizedBox(
                 height: 57,
-                child: DropdownButton(
+                child: DropdownButton<CurrencyModel>(
+                  // TODO corrigir item seleionado
+                    value: selectedItem,
                     isExpanded: true,
                     underline: Container(
                       height: 1,
                       color: Colors.purple,
                     ),
                     hint: Text("Bismark"),
-                    value: value,
                     icon: Icon(Icons.arrow_downward),
                     iconSize: 15,
-                    items: <String>["Real", "Dolar", "Euro", "Bitcoin"]
-                        .map<DropdownMenuItem<String>>((e) {
-                      return DropdownMenuItem<String>(
-                        value: e,
-                        child: Text(e),
-                      );
-                    }).toList(),
-                    onChanged: (newValue) {
-                      setState(() {
-                        value = newValue;
-                      });
-                    }),
+                    items: currencies
+                        .map((e) => DropdownMenuItem<CurrencyModel>(
+                            child: Text(e.name)))
+                        .toList(),
+                    onChanged: onChanged),
               ),
             ),
           ),
@@ -52,6 +51,7 @@ class _CurrencyFieldState extends State<CurrencyField> {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(
+                controller: controller,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                     enabledBorder: UnderlineInputBorder(
