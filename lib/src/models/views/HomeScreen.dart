@@ -1,4 +1,3 @@
-import 'package:conversor_moedas_yt/components/BtnConvertComponent.dart';
 import 'package:conversor_moedas_yt/components/CurrencyFieldComponent.dart';
 import 'package:conversor_moedas_yt/components/ImgComponent.dart';
 import 'package:conversor_moedas_yt/controllers/home_controller.dart';
@@ -43,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 selectedItem: homeController.toCurrenry,
                 onChanged: (model) {
                   setState(() {
-                    homeController.toCurrenry= model;
+                    homeController.toCurrenry = model;
                   });
                 },
               ),
@@ -53,11 +52,21 @@ class _HomeScreenState extends State<HomeScreen> {
                 selectedItem: homeController.fromCurrenry,
                 onChanged: (model) {
                   setState(() {
-                    homeController.fromCurrenry= model;
+                    homeController.fromCurrenry = model;
                   });
                 },
               ),
-              BtnConverter()
+              Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: RaisedButton(
+                  child: Text("Converter"),
+                  color: Colors.purple,
+                  textColor: Colors.white,
+                  onPressed: () {
+                    homeController.convert();
+                  },
+                ),
+              )
             ],
           ),
         ),
